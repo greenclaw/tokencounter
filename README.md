@@ -30,6 +30,46 @@ tokcount count . --top 20 --format json
 tokcount count . --include "*.py" --exclude "test_*"
 ```
 
+## Example Output
+
+```
+$ tokcount count . --top 5
+╭───────────────────────────────────── Token Count ──────────────────────────────────────╮
+│ claude-sonnet-4.5 (Anthropic)                                                          │
+│ Tokens: 13.7K (approx)  |  Files: 24  |  Size: 47.9 KB                                │
+│ Context: 6.8% of 200.0K  |  Cost: $0.0410                                              │
+│ Tokenizer: char_approx/char_approx_3.5                                                 │
+╰────────────────────────────────────────────────────────────────────────────────────────╯
+                       Top 5 Files by Token Count
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━┳━━━━━━━━━━━━━━━━━┳━━━━━━━━┓
+┃ File                             ┃ Tokens ┃      % of Total ┃   Size ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━╇━━━━━━━━━━━━━━━━━╇━━━━━━━━┩
+│ .gitignore                       │   1.3K │ █░░░░░░░░░ 9.8% │ 4.7 KB │
+│ src/tokcount/cli.py              │   1.2K │ █░░░░░░░░░ 8.8% │ 4.2 KB │
+│ src/tokcount/core/models.py      │   1.1K │ █░░░░░░░░░ 8.3% │ 4.0 KB │
+│ src/tokcount/formatters/table.py │   1.1K │ █░░░░░░░░░ 8.3% │ 4.0 KB │
+│ src/tokcount/utils/files.py      │    973 │ █░░░░░░░░░ 7.1% │ 3.4 KB │
+└──────────────────────────────────┴────────┴─────────────────┴────────┘
+               By Extension
+┏━━━━━━━━━━┳━━━━━━━┳━━━━━━━━┳━━━━━━━━━━━━┓
+┃ Ext      ┃ Files ┃ Tokens ┃ % of Total ┃
+┡━━━━━━━━━━╇━━━━━━━╇━━━━━━━━╇━━━━━━━━━━━━┩
+│ .py      │    13 │   8.9K │      65.3% │
+│ .md      │     7 │   2.9K │      21.4% │
+│ (no ext) │     2 │   1.6K │      12.0% │
+│ .toml    │     1 │    173 │       1.3% │
+│ .yml     │     1 │      8 │       0.1% │
+└──────────┴───────┴────────┴────────────┘
+```
+
+Compare multiple models side by side with `-m`:
+
+```bash
+tokcount count src/ -m gpt-5 -m sonnet -m gemini-pro
+```
+
+Each model gets its own summary panel, top files table, and extension breakdown.
+
 ## CLI Reference
 
 ### `tokcount count <paths>`

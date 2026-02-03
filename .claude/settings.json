@@ -1,0 +1,28 @@
+{
+  "hooks": {
+    "PreCompact": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo \"IMPORTANT: Before compacting, save a handover file by running /handover to preserve session context.\"",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cat <<'HOOK_EOF'\n{\"hookSpecificOutput\":{\"additionalContext\":\"A handover file may exist at .claude/handover/latest.md in the project root. If it exists, read it to restore session context from before compaction, then summarize what was being worked on.\"}}\nHOOK_EOF",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}
